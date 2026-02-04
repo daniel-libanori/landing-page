@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteDetails } from '@/data/siteDetails';
 import StyleModal from "@/components/admin/StyleModal"
+import { GlobalProvider } from '@/contexts';
 
 import "./globals.css";
 
@@ -48,13 +49,15 @@ export default function RootLayout({
         className={`${manrope.className} ${sourceSans.className} antialiased`}
       >
         {siteDetails.googleAnalyticsId && <GoogleAnalytics gaId={siteDetails.googleAnalyticsId} />}
-        <Header />
-        <main>
-          {children}
-        </main>
-        <Footer />
+        <GlobalProvider>
+          <Header />
+          <main>
+            {children}
+          </main>
+          <Footer />
 
-        <StyleModal />  
+          <StyleModal />
+        </GlobalProvider>
       </body>
       
     </html>
