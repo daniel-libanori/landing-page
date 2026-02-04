@@ -1,6 +1,8 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
+import { StyleSection, SelectedStyleOptions } from '@/types/style';
+import { INITIAL_STYLE_SECTIONS, getInitialSelectedOptions } from '@/config/styleConfig';
 
 interface GlobalContextType {
   // Estados de loading
@@ -12,8 +14,20 @@ interface GlobalContextType {
   setTheme: (theme: 'light' | 'dark') => void;
   
   // Dados compartilhados
-  sharedData: any;
-  setSharedData: (data: any) => void;
+  sharedData: Record<string, any> | null;
+  setSharedData: (data: Record<string, any> | null) => void;
+  
+  // Style sections
+  styleSections: StyleSection[];
+  setStyleSections: (sections: StyleSection[]) => void;
+  
+  // Selected style options
+  selectedStyleOptions: SelectedStyleOptions;
+  setSelectedStyleOptions: (options: SelectedStyleOptions | ((prev: SelectedStyleOptions) => SelectedStyleOptions)) => void;
+  
+  // Métodos utilitários
+  resetStylesToDefault: () => void;
+  getSelectedStyleValue: (sectionId: string) => number;
 }
 
 // Criação do contexto
@@ -28,7 +42,18 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
   // Estados básicos
   const [isLoading, setIsLoading] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [sharedData, setSharedData] = useState<any>(null);
+  const [sharedData, setSharedData] = useState<Record<string, any> | null>(null);
+  const [styleSections, setStyleSections] = useState<StyleSection[]>(INITIAL_STYLE_SECTIONS);
+  const [selectedStyleOptions, setSelectedStyleOptions] = useState<SelectedStyleOptions>(getInitialSelectedOptions());
+
+  // Métodos utilitários
+  const resetStylesToDefault = () => {
+    setSelectedStyleOptions(getInitialSelectedOptions());
+  };
+
+  const getSelectedStyleValue = (sectionId: string): number => {
+    return selectedStyleOptions[sectionId] || 0;
+  };
 
   const value: GlobalContextType = {
     isLoading,
@@ -37,6 +62,12 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
     setTheme,
     sharedData,
     setSharedData,
+    styleSections,
+    setStyleSections,
+    selectedStyleOptions,
+    setSelectedStyleOptions,
+    resetStylesToDefault,
+    getSelectedStyleValue,
   };
 
   return (

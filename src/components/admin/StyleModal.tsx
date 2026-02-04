@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import { useGlobalContext } from '@/contexts';
 
 interface StyleModalProps {
     isOpen?: boolean;
@@ -7,32 +8,21 @@ interface StyleModalProps {
 }
 
 const StyleModal: React.FC<StyleModalProps> = () => {
-
+    const { styleSections, selectedStyleOptions, setSelectedStyleOptions } = useGlobalContext();
     const [isExpanded, setIsExpanded] = React.useState<boolean>(true);
-    const [selectedIndexes, setSelectedIndexes] = React.useState<{[key: number]: number}>({});
 
-    const arr = [
-        {
-            title: "Header",
-            options: [
-                { name: "1", component: <></>, value: 1},
-                { name: "2", component: <></>, value: 2},
-                { name: "3", component: <></>, value: 3}
-            ]
-        }
-    ]
 
-    const goToPrevious = (sectionIndex: number, optionsLength: number) => {
-        setSelectedIndexes(prev => ({
+    const goToPrevious = (sectionId: string, optionsLength: number) => {
+        setSelectedStyleOptions(prev => ({
             ...prev,
-            [sectionIndex]: (prev[sectionIndex] || 0) === 0 ? optionsLength - 1 : (prev[sectionIndex] || 0) - 1
+            [sectionId]: (prev[sectionId] || 0) === 0 ? optionsLength - 1 : (prev[sectionId] || 0) - 1
         }));
     };
     
-    const goToNext = (sectionIndex: number, optionsLength: number) => {
-        setSelectedIndexes(prev => ({
+    const goToNext = (sectionId: string, optionsLength: number) => {
+        setSelectedStyleOptions(prev => ({
             ...prev,
-            [sectionIndex]: (prev[sectionIndex] || 0) === optionsLength - 1 ? 0 : (prev[sectionIndex] || 0) + 1
+            [sectionId]: (prev[sectionId] || 0) === optionsLength - 1 ? 0 : (prev[sectionId] || 0) + 1
         }));
     };
 
@@ -44,16 +34,16 @@ const StyleModal: React.FC<StyleModalProps> = () => {
             </div>
             { isExpanded &&
                 <div className='h-56 w-64 overflow-y-auto'>
-                    { arr.map((section, index) => {
-                        const selectedIndex = selectedIndexes[index] || 0;
+                    { styleSections.map((section) => {
+                        const selectedIndex = selectedStyleOptions[section.id] || 0;
                        
                         return (
-                            <div key={index} className="px-4 py-2 border-b flex flex-row justify-between items-center">
+                            <div key={section.id} className="px-4 py-2 border-b flex flex-row justify-between items-center">
                                 <p className="font-medium">{section.title}</p>
                                 <div className="flex items-center justify-between">
-                                    <button onClick={() => goToPrevious(index, section.options.length)} className="cursor-pointer text-lg">{"<"}</button>
+                                    <button onClick={() => goToPrevious(section.id, section.options.length)} className="cursor-pointer text-lg">{"<"}</button>
                                     <span className="mx-4">{section.options[selectedIndex].name}</span>
-                                    <button onClick={() => goToNext(index, section.options.length)} className="cursor-pointer text-lg">{">"}</button>
+                                    <button onClick={() => goToNext(section.id, section.options.length)} className="cursor-pointer text-lg">{">"}</button>
                                 </div>
                             </div>
                         )
