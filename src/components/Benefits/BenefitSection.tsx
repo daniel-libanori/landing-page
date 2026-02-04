@@ -47,52 +47,19 @@ export const childVariants = {
 };
 
 const BenefitSection: React.FC<Props> = ({ benefit, imageAtRight }: Props) => {
-    const { title, description, imageSrc, bullets } = benefit;
+    const { title, description, imageSrc } = benefit;
+
 
     return (
-        <section className="benefit-section">
-            <motion.div
-                className="flex flex-wrap flex-col items-center justify-center gap-2 lg:flex-row lg:gap-20 lg:flex-nowrap mb-24"
-                variants={containerVariants}
-                initial="offscreen"
-                whileInView="onscreen"
-                viewport={{ once: true }}
-            >
-                <div
-                    className={clsx("flex flex-wrap items-center w-full max-w-lg", { "justify-start": imageAtRight, "lg:order-1 justify-end": !imageAtRight })}
-                    
-                >
-                    <div className="w-full  text-center lg:text-left ">
-                        <motion.div
-                            className="flex flex-col w-full"
-                            variants={childVariants}
-                        >
-                            <SectionTitle>
-                                <h3 className="lg:max-w-2xl">
-                                    {title}
-                                </h3>
-                            </SectionTitle>
-
-                            <p className="mt-1.5 mx-auto lg:ml-0 leading-normal text-foreground-accent">
-                                {description}
-                            </p>
-                        </motion.div>
-
-                        <div className="mx-auto lg:ml-0 w-full">
-                            {bullets.map((item, index) => (
-                                <BenefitBullet key={index} title={item.title} icon={item.icon} description={item.description} />
-                            ))}
-                        </div>
-                    </div>
+        <div className={"w-[30%] min-h-32 mb-10 border-white border rounded-lg p-4 pb-10"}>
+            <div className="flex flex-row justify-between items-center">
+                <h4 className="font-medium text-white text-lg">{title}</h4>
+                <div className="">
+                    {imageSrc}
                 </div>
-
-                <div className={clsx("mt-5 lg:mt-0", { "lg:order-2": imageAtRight })}>
-                    <div className={clsx("w-fit flex", { "justify-start": imageAtRight, "justify-end": !imageAtRight })}>
-                        <Image src={imageSrc} alt="title" width="384" height="762" quality={100} className="lg:ml-0" />
-                    </div>
-                </div>
-            </motion.div>
-        </section>
+            </div>
+            <p className="mt-3 text-white/80 overflow-x-hidden text-md">{description}</p>
+        </div>
     );
 }
 

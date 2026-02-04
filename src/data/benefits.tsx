@@ -5,7 +5,7 @@ import { IBenefit } from "@/types"
 export const benefits: IBenefit[] = [
     {
         title: "Smart Budgeting",
-        description: "Take the guesswork out of managing your money. Our AI-powered budgeting tool adapts to your lifestyle and helps you stay on track.",
+        description: "AI-powered budgeting that adapts to your lifestyle and keeps you on track.",
         bullets: [
             {
                 title: "Intelligent Categorization",
@@ -23,11 +23,11 @@ export const benefits: IBenefit[] = [
                 icon: <FiTrendingUp size={26} />
             }
         ],
-        imageSrc: "/images/mockup-1.webp"
+        imageSrc: <FiBarChart2 size={36} className="text-primary" />
     },
     {
         title: "Seamless Investing",
-        description: "Start building wealth today, no financial degree required. Finwise makes investing accessible and straightforward.",
+        description: "Start building wealth today with accessible, straightforward investing.",
         bullets: [
             {
                 title: "Micro-Investing",
@@ -45,11 +45,11 @@ export const benefits: IBenefit[] = [
                 icon: <FiPieChart size={26} />
             }
         ],
-        imageSrc: "/images/mockup-2.webp"
+        imageSrc: <FiBriefcase size={36} className="text-primary" />
     },
     {
         title: "Bank-Grade Security",
-        description: "Your financial data deserves the best protection. Rest easy knowing Finwise employs cutting-edge security measures.",
+        description: "Your financial data protected with cutting-edge security measures.",
         bullets: [
             {
                 title: "Military-Grade Encryption",
@@ -67,6 +67,6 @@ export const benefits: IBenefit[] = [
                 icon: <FiShield size={26} />
             }
         ],
-        imageSrc: "/images/mockup-1.webp"
+        imageSrc: <FiDollarSign size={36} className="text-primary" />
     },
 ]

@@ -5,6 +5,7 @@ import { Source_Sans_3, Manrope } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteDetails } from '@/data/siteDetails';
+import StyleModal from "@/components/admin/StyleModal"
 
 import "./globals.css";
 
@@ -52,7 +53,10 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+
+        <StyleModal />  
       </body>
+      
     </html>
   );
 }
